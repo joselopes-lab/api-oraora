@@ -1,5 +1,5 @@
 
-import express from 'express';
+import * as express from 'express';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import admin from '../firebase'; // Import the initialized admin SDK
 import { z } from 'zod';
@@ -41,6 +41,8 @@ router.post('/chatbot', async (req, res) => {
 
     // Use the validated data from now on
     const { mensagemUsuario, uid, stream, historico } = validationResult.data;
+
+    console.log(uid)
 
     let baseImoveisMd = '';
     try {

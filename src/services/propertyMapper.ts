@@ -78,10 +78,30 @@ function mapTipoImovel(value?: string): string {
 }
 
 /** Garante que um timestamp do Firestore vire string legível pelo CNM */
-function mapTimestamp(ts?: FirebaseFirestore.Timestamp | string): string {
-  if (!ts) return new Date().toISOString().replace('T', ' ').slice(0, 19);
-  if (typeof ts === 'string') return ts;
-  return ts.toDate().toISOString().replace('T', ' ').slice(0, 19);
+function mapTimestamp(ts?: any): string {
+  // Retorna a data/hora atual se nenhuma for fornecida.
+  if (!ts) {
+    return new Date().toISOString().replace('T', ' ').slice(0, 19);
+  }
+
+  // Se for uma string, garante que está no formato correto.
+  if (typeof ts === 'string') {
+    return ts.slice(0, 19);
+  }
+
+  // Se for um objeto Timestamp do Firestore, converte para string.
+  if (typeof ts.toDate === 'function') {
+    return ts.toDate().toISOString().replace('T', ' ').slice(0, 19);
+  }
+
+  // Se for um objeto com _seconds (comum em serializações), converte.
+  if (typeof ts === 'object' && ts !== null && typeof ts._seconds === 'number') {
+    const date = new Date(ts._seconds * 1000 + (ts._nanoseconds ?? 0) / 1000000);
+    return date.toISOString().replace('T', ' ').slice(0, 19);
+  }
+  
+  // Como fallback, retorna a data/hora atual para tipos inesperados.
+  return new Date().toISOString().replace('T', ' ').slice(0, 19);
 }
 
 /** Trunca a descrição para no máximo 3000 caracteres */

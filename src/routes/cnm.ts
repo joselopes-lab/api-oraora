@@ -41,7 +41,9 @@ async function generateXmlForUser(userId: string): Promise<{
 
   // 3. Mapeia cada imóvel para o formato CNM
   for (const [id, doc] of propertiesMap.entries()) {
-    const { imovel, warnings } = mapPropertyToCnm(id, doc);
+    const mappingResult = mapPropertyToCnm(id, doc);
+    const { imovel, warnings } = mappingResult;
+
     allWarnings.push(...warnings);
 
     if (!imovel.estado || !imovel.cidade || !imovel.bairro) {
@@ -54,8 +56,6 @@ async function generateXmlForUser(userId: string): Promise<{
 
   // 4. Gera o XML e calcula os totais
   const xml = buildXml(cnmImoveis);
-  // CORREÇÃO: Calcula 'skipped' como a diferença entre o total de IDs da carteira
-  // e o número de imóveis que foram efetivamente adicionados ao XML.
   const skipped = propertyIds.length - cnmImoveis.length;
 
   return {

@@ -2,7 +2,8 @@
 // Load environment variables from .env file
 require('dotenv').config();
 import 'express-async-errors';
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
+import { Request, Response, NextFunction } from 'express';
 import rateLimit from 'express-rate-limit'; // Import express-rate-limit
 
 // Import routers

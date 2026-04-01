@@ -23,7 +23,7 @@ if (!admin.apps.length) {
     if (serviceAccount) {
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
-            storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "secureadminpanel.firebasestorage.app"
+            storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "studio-5937631195-8ebfd.firebasestorage.app"
         });
     } else {
         console.error('Firebase Admin SDK initialization failed. See previous logs for details.');
