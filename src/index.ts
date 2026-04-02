@@ -16,6 +16,10 @@ import dnsRouter from './routes/dns';
 
 const app = express();
 
+
+// Diz ao Express para confiar nos cabeçalhos (headers) do proxy reverso
+app.set('trust proxy', true);
+
 // --- Middleware ---
 app.use(express.json());
 
