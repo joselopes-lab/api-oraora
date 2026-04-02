@@ -19,6 +19,23 @@ const app = express();
 // --- Middleware ---
 app.use(express.json());
 
+// --- Dynamic Domain Routing Middleware ---
+// This middleware checks if the request is coming from mapon.com.br
+// and internally rewrites the path to /mapon without a redirect.
+app.use((req, res, next) => {
+  // Use req.hostname to get the domain without the port
+  const hostname = req.hostname;
+  if (hostname === 'mapon.com.br' || hostname === 'www.mapon.com.br') {
+    // If the visitor is at the root of mapon.com.br, internally treat it as /mapon
+    if (req.url === '/' || req.path === '/') {
+      req.url = '/mapon';
+    }
+  }
+  next();
+});
+
+
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per windowMs
@@ -43,6 +60,10 @@ if (!process.env.JWT_SECRET) {
 app.get('/', (req, res) => {
   const name = process.env.NAME || 'World';
   res.send(`Hello ${name}!`);
+});
+
+app.get('/mapon', (req, res) => {
+  res.send(`Hello mapon!`);
 });
 
 // Health check
