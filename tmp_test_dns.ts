@@ -1,4 +1,4 @@
-import { dnsService } from './src/services/dns.service';
+import { dnsService } from './src/services/dnsService';
 require('dotenv').config();
 
 async function test() {

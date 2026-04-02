@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { dnsService } from '../services/dns.service';
+import { dnsService } from '../services/dnsService';
 
 const router = Router();
 

@@ -1,4 +1,4 @@
-const { dnsService } = require('./src/services/dns.service');
+const { dnsService } = require('./src/services/dnsService');
 require('dotenv').config();
 
 async function test() {
