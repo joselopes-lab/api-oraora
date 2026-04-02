@@ -12,6 +12,7 @@ import olxRouter from './routes/olx';
 import authRouter from './routes/auth'; // Import the new auth router
 import chatbotRouter from './routes/chatbot';
 import cnmRouter from './routes/cnm';
+import dnsRouter from './routes/dns';
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use('/api', propertiesRouter);
 app.use('/api', olxRouter);
 app.use('/api', chatbotRouter);
 app.use('/api', cnmRouter);
+app.use('/api/dns', dnsRouter);
 
 // --- Centralized Error Handling ---
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
